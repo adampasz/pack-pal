@@ -14,10 +14,10 @@ The initial version of this project supports Adobe Air packaging only. Future ve
 
 # Installation 
 
-Git clone this repo and cd into it. 
+Git clone this repo and cd into it. Note, this project uses the [nopt](https://github.com/npm/nopt) module to parse arguments. 
 
 ````
-npm install nopt
+npm install
 chmod u+x /path/to/pack.js
 ````
 Then, you probably want to add something along these lines to your .profile:

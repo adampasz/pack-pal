@@ -1,0 +1,33 @@
+{
+  "name": "pack-pal",
+  "preferGlobal": false,
+  "version": "0.0.1",
+  "author": "adampasz <adampasz@yahoo.com>",
+  "description": "A harness to compile, package and launch cross-platform mobile apps.",
+  "contributors": [ 
+    {
+    } 
+  ],
+  "main": "./pack",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adampasz/pack-pal.git"
+  },
+  "keywords": [
+    "adobe",
+    "air",
+    "mxmlc",
+    "adt"
+  ],
+  "dependencies" : {
+    "nopt"   :  "2.2.x"
+  },
+  "bundledDependencies": [
+    "union",
+    "ecstatic"
+  ],  
+  "license": "Apache 2.0",
+  "engines": {
+    "node": ">=0.10.24"
+  }
+}
