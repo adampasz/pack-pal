@@ -53,46 +53,41 @@ Now, you should create a .json file for your project as follows:
 # Usage
 This repo includes an example project that can help you get started.  Note that you will need to set some of the properties in pack.json for the example to build.
 
-To run these commands, cd into the root of this repo (where you cloned it).
+To run these commands, cd into the 'example_project' directory.
 
 Basic compilation and launch in Adobe Air simulator (with sample output):
 ````
-node pack.js -c example_project/pack.json -s
-{ config: 'example_project/pack.json',
-  launch: 'simulator',
+node ../pack.js -s
+{ launch: 'simulator',
   argv:
    { remain: [],
-     cooked:
-      [ '--config',
-        'example_project/pack.json',
-        '--launch',
-        'simulator' ],
-     original: [ '-c', 'example_project/pack.json', '-s' ] } }
+     cooked: [ '--launch', 'simulator' ],
+     original: [ '-s' ] } }
 Network IP=10.0.1.4
 [exec] echo "COMPILING..."
 [out] COMPILING...
-[exec] /Users/adampasz/airhome/bin/mxmlc +AIR_HOME=/Users/adampasz/airhome example_project/Example.as -output example_project/Example.swf -debug=false -omit-trace-statements=true -verbose-stacktraces=false
+[exec] /Users/adampasz/airhome/bin/mxmlc +AIR_HOME=/Users/adampasz/airhome Example.as -output Example.swf -debug=false -omit-trace-statements=true -verbose-stacktraces=false
 [out] Loading configuration: /Users/adampasz/airhome/frameworks/flex-config.xml
 
-572 bytes written to /Users/adampasz/post/gh/adampasz/pack-pal/example_project/Example.swf in 1.338 seconds
+572 bytes written to /Users/adampasz/post/gh/adampasz/pack-pal/example_project/Example.swf in 1.201 seconds
 [exec] echo "PACKAGING"
 [out] PACKAGING
 [exec] echo "Nothing to package. Target not specified."
 [out] Nothing to package. Target not specified.
 [exec] echo "LAUNCHING..."
 [out] LAUNCHING...
-[exec] /Users/adampasz/airhome/bin/adl -profile extendedMobileDevice -screensize '768x1004:768x1024' 'example_project/descriptor.xml' root-directory '.' > /dev/null &
+[exec] /Users/adampasz/airhome/bin/adl -profile extendedMobileDevice -screensize '768x1004:768x1024' 'descriptor.xml' root-directory '.' > /dev/null &
 ````
 
 Build and deploy debug build on iOS Simulator:
 ````
-node pack.js -c example_project/pack.json -d -i -s
+node ../pack.js -d -i -s
 
 ````
 
 Build and deploy debug build on Android device (over USB):
 ````
-node pack.js -c example_project/pack.json -d -a
+node ../pack.js -d -a
 ````
 
 

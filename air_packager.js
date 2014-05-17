@@ -65,8 +65,6 @@ exports.package = function(password, cert, profile, payload, appID, swf) {
             if (self.debug) {
                 args += ' -connect ' + self.networkIP;
             }
-            args += ' -keystore ' + cert;
-            args += ' -storetype ' + 'pkcs12';
         } else if (self.target == "ios") {
             if (self.launchMethod == "simulator") {
                 args += (' -target ' + (self.debug ? 'ipa-debug-interpreter-simulator' : 'ipa-test-interpreter-simulator'));
@@ -80,11 +78,10 @@ exports.package = function(password, cert, profile, payload, appID, swf) {
                 args += (' -hideAneLibSymbols ' + (self.launchMethod == "simulator" ? 'no' : 'yes'));
                 args += ' -provisioning-profile ' + profile;
             }
-            args += ' -keystore ' + cert;
-            args += ' -storetype ' + 'pkcs12';
-            args += " -storepass '" + password + "'";
         }
-
+        args += ' -keystore ' + cert;
+        args += ' -storetype ' + 'pkcs12';
+        args += " -storepass '" + password + "'";
         var cmd = "'" + getADTPath() + "' -package" + args;
         cmd += " '" + payload + (self.target == "ios" ? ".ipa" : ".apk") + "' " + self.descriptor + " " + swf;
         if (self.launchMethod == "simulator") {

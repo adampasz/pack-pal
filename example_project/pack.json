@@ -1,8 +1,8 @@
 {
-    "compiler_args": "example_project/Example.as",
-    "build_path": "example_project/",
+    "compiler_args": "Example.as",
+    "build_path": "",
     "executable_name": "Example",
-    "descriptor_path": "example_project/descriptor.xml",
+    "descriptor_path": "descriptor.xml",
     "app_id": "com.packpal.example",
     "ios_sim_path": "/./Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk",
     "air_sdk_path": "/Users/adampasz/airhome",
