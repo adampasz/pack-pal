@@ -59,28 +59,33 @@ exports.launch = function(payload, appID) {
 exports.package = function(password, cert, profile, payload, appID, swf) {
     echo("PACKAGING");
     if (self.target) {
-        var args = [];
+        var args = '';
         if (self.target == "android") {
-            args = args.concat(['-target', self.debug ? 'apk-debug' : 'apk-captive-runtime']);
+            args += (' -target ' + (self.debug ? 'apk-debug' : 'apk-captive-runtime'));
+            if (self.debug) {
+                args += ' -connect ' + self.networkIP;
+            }
+            args += ' -keystore ' + cert;
+            args += ' -storetype ' + 'pkcs12';
         } else if (self.target == "ios") {
             if (self.launchMethod == "simulator") {
-                args = args.concat(['-target', self.debug ? 'ipa-debug-interpreter-simulator' : 'ipa-test-interpreter-simulator']);
+                args += (' -target ' + (self.debug ? 'ipa-debug-interpreter-simulator' : 'ipa-test-interpreter-simulator'));
             } else {
-                args = args.concat(['-target', self.debug ? 'ipa-debug-interpreter' : 'ipa-ad-hoc']);
+                args += (' -target ' + (self.debug ? 'ipa-debug-interpreter' : 'ipa-ad-hoc'));
             }
             if (self.debug) {
-                args = args.concat(['-connect', self.networkIP]);
+                args += ' -connect ' + self.networkIP;
             }
             if (self.target == "ios") {
-                args = args.concat(['-hideAneLibSymbols', self.launchMethod == "simulator" ? 'no' : 'yes']);
-                args = args.concat(['-provisioning-profile', profile]);
+                args += (' -hideAneLibSymbols ' + (self.launchMethod == "simulator" ? 'no' : 'yes'));
+                args += ' -provisioning-profile ' + profile;
             }
-            args = args.concat(['-keystore', cert]);
-            args = args.concat(['-storetype', 'pkcs12']);
-            args = args.concat(['-storepass', password]);
+            args += ' -keystore ' + cert;
+            args += ' -storetype ' + 'pkcs12';
+            args += " -storepass '" + password + "'";
         }
 
-        var cmd = "'" + getADTPath() + "' '-package' " + args.join(" ");
+        var cmd = "'" + getADTPath() + "' -package" + args;
         cmd += " '" + payload + (self.target == "ios" ? ".ipa" : ".apk") + "' " + self.descriptor + " " + swf;
         if (self.launchMethod == "simulator") {
             cmd += ' ' + self.iosSim;

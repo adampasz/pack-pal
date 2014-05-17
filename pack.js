@@ -16,11 +16,17 @@ var nopt = require("nopt"),
         "c": ["--config"],
     }, options = nopt(knownOpts, shortHands, process.argv, 2);
 console.log(options);
+if (!options.hasOwnProperty('config')) {
+	options.config = 'pack.json'
+}
+
 //load json configuration for this task
 var fs = require('fs'),
     data = fs.readFileSync(options.config);
+
 var config = JSON.parse(data.toString());
 //init packager
+
 var air = require('./air_packager.js')
     .init(onBuilderReady, options.launch, options.target, options.debug, config.descriptor_path, config.air_sdk_path, config.ios_sim_path, options.experimental);
 
