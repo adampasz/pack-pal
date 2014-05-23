@@ -3,13 +3,14 @@ var exec = require('child_process').exec;
 var sh = require('./command_queue').init().enqueue;
 var self = this;
 
-exports.init = function(onReady, launchMethod, target, debug, descriptor, airsdk, iosSim, useASCSH) {
+exports.init = function(onReady, launchMethod, target, debug, descriptor, airsdk, iosSim, extDirs, useASCSH) {
     self.MXMLC = (useASCSH ? 'ascshd mxmlc' : airsdk + '/bin/mxmlc') + ' +AIR_HOME=' + airsdk;
     self.launchMethod = launchMethod;
     self.target = target;
     self.debug = debug;
     self.airsdk = airsdk;
     self.descriptor = descriptor;
+	self.extDirs = extDirs;
     self.iosSim = '-platformsdk ' + iosSim;
     fetchNetworkIP(console.error, onReady);
     return this;
@@ -49,8 +50,8 @@ exports.launch = function(payload, appID) {
         } else {
             echo("Install complete and app. is ready to launch manually. (Note: ios does not support auto-launch).");
         }
-    } else if (self.launchMethod == "simulator") {
-        sh(self.airsdk + "/bin/adl -profile extendedMobileDevice -screensize '768x1004:768x1024' '" + self.descriptor + "' root-directory '.'" + " > /dev/null &");
+    } else if (self.launchMethod == "simulator") {//TODO: Pass in screen size or read it from config.xml
+        sh(self.airsdk + "/bin/adl" + " -extdir unzipped_anes -profile extendedMobileDevice -screensize '768x1004:768x1024' '" + self.descriptor + "' root-directory '.'" + " > /dev/null &");
     } else {
         echo("Launch not specified.");
     }
@@ -87,7 +88,8 @@ exports.package = function(password, cert, profile, payload, appID, swf) {
         if (self.launchMethod == "simulator") {
             cmd += ' ' + self.iosSim;
         }
-        sh(cmd);
+		cmd += getExtDirs();        
+		sh(cmd);
     } else {
         echo("Nothing to package. Target not specified.");
     }
@@ -96,6 +98,16 @@ exports.package = function(password, cert, profile, payload, appID, swf) {
 /////////////
 // PRIVATE
 /////////////
+
+var getExtDirs = function() {
+	var s = '';
+	if (self.extDirs && self.extDirs.length) {
+			for (var i=0; i < self.extDirs.length; i++) {
+				s += " -extdir " + self.extDirs[i];
+			}
+		}
+	return s;
+}
 var getADTPath = function() {
     return self.airsdk + "/bin/adt"
 }

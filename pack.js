@@ -17,18 +17,21 @@ var nopt = require("nopt"),
     }, options = nopt(knownOpts, shortHands, process.argv, 2);
 console.log(options);
 if (!options.hasOwnProperty('config')) {
-	options.config = 'pack.json'
+    options.config = 'pack.json'
 }
 
 //load json configuration for this task
 var fs = require('fs'),
     data = fs.readFileSync(options.config);
-
 var config = JSON.parse(data.toString());
-//init packager
+var air;
 
-var air = require('./air_packager.js')
-    .init(onBuilderReady, options.launch, options.target, options.debug, config.descriptor_path, config.air_sdk_path, config.ios_sim_path, options.experimental);
+//TODO: Unzip Anes if necessary!
+fs.mkdir('unzipped_anes', function(e) {
+    //init packager
+    air = require('./air_packager.js')
+        .init(onBuilderReady, options.launch, options.target, options.debug, config.descriptor_path, config.air_sdk_path, config.ios_sim_path, config.ext_dirs, options.experimental);
+});
 
 function onBuilderReady() {
     var payload = config.build_path + config.executable_name;

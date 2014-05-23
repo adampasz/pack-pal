@@ -47,10 +47,13 @@ Now, you should create a .json file for your project as follows:
     "app_id": app ID,
     "ios_sim_path": path to iOS simulator, e.g.: "/./Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk",
     "air_sdk_path": path to Air SDK
+	"ext_dirs": array of paths to ANEs used in project. 
 }
 ````
 
 # Usage
+
+
 This repo includes an example project that can help you get started.  Note that you will need to set some of the properties in pack.json for the example to build.
 
 To run these commands, cd into the 'example_project' directory.

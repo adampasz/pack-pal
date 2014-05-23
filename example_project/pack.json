@@ -9,5 +9,6 @@
     "ios_certificate_path": "?????",
     "android_certificate_path": "?????",
     "profile_path": "?????",
-    "certificate_password": "?????"
+    "certificate_password": "?????",
+	"ext_dirs": ["/path/to/an/extension/", "/path/to/some/other/ane/"]
 }
